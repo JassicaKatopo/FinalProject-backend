@@ -4,7 +4,7 @@ import { useState, useEffect} from 'react';
 import { Button } from '@material-ui/core';
 import { db } from './firebase_config';
 import firebase from "firebase";
-import todoListItem from './todo';
+import TodoListItem from './Todo';
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -20,10 +20,10 @@ function App() {
         querySnapshot.docs.map((doc) => ({
           id: doc.id,
           todo: doc.data().todo,
-          inprogress: doc.data().inprogress
+          inprogress: doc.data().inprogress,
         }))
       );
-    })
+    });
   }
 
   function addTodo(e){
@@ -57,22 +57,23 @@ function App() {
           label="Write a To Do..." 
           value={todoInput}
           onChange={(e) => setTodoInput(e.target.value)}
-          style={{maxWidth: "300px", width:"90vw"}}
+          style={{maxWidth: "400px", width:"90vw"}}
         />
         <Button 
           type="submit"
           variant="contained" 
           onClick={addTodo}
-          style={{display: "none"}}>
+          style={{display: "none"}}
+        >
           Default
         </Button>
       </form>
 
       {todos.map((todo) => (
-        <todoListItem 
-        todo={todo.todo}
-        inprogress={todo.inprogress}
-        id={todo.id}
+        <TodoListItem 
+          todo={todo.todo} 
+          inprogress={todo.inprogress} 
+          id={todo.id}
         />
       ))}
      </div>
